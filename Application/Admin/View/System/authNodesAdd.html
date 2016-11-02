@@ -1,0 +1,94 @@
+<include file="Common/_meta"/>
+<body>
+<article class="page-container">
+	<form id="form" class="form form-horizontal">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：选择模块 </label>
+			<div class="formControls col-xs-4 col-sm-4">
+				<select class="select" name="module">
+                    <volist name="nav" id="vo">
+                        <option value="{$key}">{$vo}</option>
+                    </volist>
+                </select>
+			</div>
+			<div class="formControls col-xs-4 col-sm-6"></div>
+		</div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：选择控制器 </label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <select class="select" name="action">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="formControls col-xs-4 col-sm-6"></div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：操作 </label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <select class="select" name="operate">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="formControls col-xs-4 col-sm-6"></div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：操作名称 </label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <input type="text" class="input-text"  placeholder="操作名称"  name="title" >
+            </div>
+            <div class="formControls col-xs-4 col-sm-6"></div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：操作URL </label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <input type="text" class="input-text"  placeholder="操作URL"  name="url" >
+            </div>
+            <div class="formControls col-xs-4 col-sm-6"></div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>：排序 </label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <input type="text" class="input-text"  placeholder="排序"  name="sort" >
+            </div>
+            <div class="formControls col-xs-4 col-sm-6"></div>
+        </div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button  class="btn btn-primary radius" type="button" id="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        $("#submit").click(function(){
+            $.post("{: U('authNodesAddAction')}",$("#form").serialize(),function(result){
+                layer.msg(result['msg']);
+            });
+        });
+
+        $("select[name='module']").change(function(){
+            $.get("{: U('getNodes')}",{mid:$(this).val()},function(result){
+                $("select[name='action']").html(result);
+            });
+        });
+
+        $("select[name='action']").change(function(){
+            $.get("{: U('getNodes')}",{mid:$(this).val()},function(result){
+                $("select[name='operate']").html(result);
+            });
+        });
+    });
+</script>
